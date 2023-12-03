@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: authorization-service-316
+  profiles:
+    active: ${SPRING_PROFILE}
+  cloud:
+    config:
+      uri: http://${CONFIG_SERVER_HOST}:9088
+
