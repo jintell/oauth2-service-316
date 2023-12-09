@@ -1,6 +1,6 @@
 spring:
   application:
-    name: authorization-service-316
+    name: authorization-service
   profiles:
     active: ${SPRING_PROFILE}
   cloud:

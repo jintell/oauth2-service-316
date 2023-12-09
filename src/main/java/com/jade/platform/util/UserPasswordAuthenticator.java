@@ -37,6 +37,7 @@ public class UserPasswordAuthenticator {
             // Validate password
             if(passwordEncoder.matches(usernamePassword[1], foundPassword) ) return resultSet;
             ApiErrorAdvice.handleErrorResponse("Invalid Username/Password");
+            return resultSet;
         }catch (Exception ex){ ApiErrorAdvice.handleErrorResponse("Wrong User Credentials"); }
         return resultSet;
     }

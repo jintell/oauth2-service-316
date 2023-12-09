@@ -31,7 +31,9 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static com.jade.platform.jwk.Jwks.generateRsa;
 
@@ -111,9 +113,11 @@ public class AuthorizationServerConfig {
                 // Customize headers/claims for access_token
                 String encodedCredentials = request.getHeader("Auth-ID");
                 if(encodedCredentials != null) {
-                    String publicId = CustomTokenAttribute.getPublicId(encodedCredentials, dataSource, passwordEncoder);
-                    claims.claim("public_id", publicId)
-                            .build();
+                    List<String> roles = new ArrayList<>();
+                    Map<String, Object>  result = CustomTokenAttribute.getPublicId(encodedCredentials, dataSource, passwordEncoder);
+                    claims.claim("public_id", result.getOrDefault("public_id", "")).build();
+                    roles.add((String) result.getOrDefault("name", ""));
+                    claims.claim("roles", roles).build();
                 }else log.error("No User Credentials supplied");
             } else if (context.getTokenType().getValue().equals(OidcParameterNames.ID_TOKEN)) {
                 // Customize headers/claims for id_token

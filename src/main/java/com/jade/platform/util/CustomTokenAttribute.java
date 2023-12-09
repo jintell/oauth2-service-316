@@ -11,9 +11,8 @@ import java.util.Map;
  */
 public class CustomTokenAttribute {
     private CustomTokenAttribute() {}
-    public static String getPublicId(String credentials, HikariDataSource dataSource, PasswordEncoder passwordEncoder)  {
-        return String.format("%s",
-                loadUserByUsername(credentials, dataSource, passwordEncoder).get("public_id"));
+    public static Map<String, Object> getPublicId(String credentials, HikariDataSource dataSource, PasswordEncoder passwordEncoder)  {
+        return loadUserByUsername(credentials, dataSource, passwordEncoder);
     }
 
     private static Map<String, Object> loadUserByUsername(String credentials,
